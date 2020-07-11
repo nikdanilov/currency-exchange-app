@@ -75,7 +75,7 @@ function App() {
             label="Amount"
             currencyOptions={currencyOptions}
             selectedCurrency={fromCurrency}
-            onChangeCurrency={e => setFromCurrency(e.target.value)}
+            onChangeCurrency={e => setFromCurrency(e.value)}
             onChangeCurrencyAmount={handleFromAmountChange}
             currencyAmount={fromCurrencyAmount}
           />
@@ -92,7 +92,7 @@ function App() {
             label="Converted to"
             currencyOptions={currencyOptions}
             selectedCurrency={toCurrency}
-            onChangeCurrency={e => setToCurrency(e.target.value)}
+            onChangeCurrency={e => setToCurrency(e.value)}
             onChangeCurrencyAmount={handleToAmountChange}
             currencyAmount={toCurrencyAmount}
           />
