@@ -1,12 +1,18 @@
 import React from 'react'
-import Select, { createFilter } from 'react-select'
+import Select, { createFilter, components } from 'react-select'
+
+import countryData from './countryData'
+
+const swapJson = (json) => {
+    var result = {}
+    for (var key in countryData) {
+        result[countryData[key]] = key
+    }
+    return result
+}
 
 export default function CurrencyInput(props) {
     const { label, currencyOptions, selectedCurrency, onChangeCurrency, currencyAmount, onChangeCurrencyAmount } = props
-
-    const divStyle = {
-        backgroundImage: 'url(https://www.countryflags.io/be/flat/64.png)'
-    }
 
     const filterFn = createFilter({
         ignoreCase: true,
@@ -15,8 +21,33 @@ export default function CurrencyInput(props) {
         matchFrom: 'start'
     })
 
+    const { Option } = components
+    const IconOption = props => (
+        <Option {...props}>
+            <img
+            src={props.data.icon}
+            style={{ width: 30, height:30 }}
+            alt={props.data.label}
+            />
+            {props.data.label}
+        </Option>
+    )
+
+    const styleFn = {
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isSelected ? '#00b9ff' : '#fff',
+        }),
+
+        valueContainer: (base) => ({
+            ...base,
+            paddingBottom: '0.6rem'
+        })
+    }
+
+    const currencyCountryMap = swapJson(countryData)
     const options = currencyOptions.map(option => {
-        return { value: option, label: option }
+        return { value: option, label: option, icon:`https://www.countryflags.io/${currencyCountryMap[option]}/flat/64.png`}
     })
 
     return (
@@ -36,10 +67,12 @@ export default function CurrencyInput(props) {
                 <div className="w-1/4">
                     <div className="relative w-24">
                         <Select
-                            className="mt-7 appearance-none w-full block bg-white hover:border-gray-500 focus:outline-none focus:shadow-outline"
+                            className="mt-7 appearance-none w-full block bg-white hover:border-gray-500 focus:outline-none"
                             value={{ label: selectedCurrency, value: selectedCurrency }}
                             filterOption={filterFn}
                             options={options}
+                            components={{ Option: IconOption }}
+                            styles={styleFn}
                             onChange={onChangeCurrency}
                         />
                     </div>

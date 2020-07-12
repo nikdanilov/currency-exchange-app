@@ -5,7 +5,7 @@ import Header from './Header'
 import Footer from './Footer'
 import CurrencyInput from './CurrencyInput'
 
-const BASE_URL = 'https://api.exchangeratesapi.io/latest'
+const EXCHANGE_RATES_URL = 'https://api.exchangeratesapi.io/latest'
 
 function App() {
   const [currencyOptions, setCurrencyOptions] = useState([])
@@ -18,14 +18,17 @@ function App() {
   let toCurrencyAmount, fromCurrencyAmount
   if (isLinearExchange) {
     fromCurrencyAmount = currencyAmount
-    toCurrencyAmount = (currencyAmount * exchangeRate).toFixed(5)
+    toCurrencyAmount = (currencyAmount * exchangeRate)
+    if (toCurrencyAmount % 1 !== 0) toCurrencyAmount = parseFloat(toCurrencyAmount.toFixed(5))
+
   } else {
     toCurrencyAmount = currencyAmount
-    fromCurrencyAmount = (currencyAmount / exchangeRate).toFixed(5)
+    fromCurrencyAmount = (currencyAmount / exchangeRate)
+    if (fromCurrencyAmount % 1 !== 0) fromCurrencyAmount = parseFloat(fromCurrencyAmount.toFixed(5))
   }
 
   useEffect(() => {
-    fetch(BASE_URL)
+    fetch(EXCHANGE_RATES_URL)
       .then(res => res.json())
       .then(data => {
         const firstCurrency = Object.keys(data.rates)[0]
@@ -40,7 +43,7 @@ function App() {
     if (fromCurrency != null && toCurrency != null) {
       if (fromCurrency === toCurrency) setExchangeRate(1)
       else {
-        fetch(`${BASE_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
+        fetch(`${EXCHANGE_RATES_URL}?base=${fromCurrency}&symbols=${toCurrency}`)
           .then(res => res.json())
           .then(data => setExchangeRate(data.rates[toCurrency]))
       }
@@ -66,7 +69,7 @@ function App() {
   return (
     <div className="min-h-screen bg-neutral text-sepia-900">
       <Header
-        fromCurrency={fromCurrency} 
+        fromCurrency={fromCurrency}
         toCurrency={toCurrency}
       />
       <div className="mt-4 mx-auto max-w-md px-6 py-4 bg-white rounded overflow-hidden shadow-lg">
@@ -99,11 +102,11 @@ function App() {
         </form>
         <div className="mt-3 text-center">
           <h3 className="font-semibold text-secondary">1 {fromCurrency} = <span className="text-green-400">{exchangeRate}</span> {toCurrency}</h3>
-          <small className="mb-1">Sourced from <a className="underline" href="https://api.exchangeratesapi.io/latest">api.exchangeratesapi.io</a> </small>
-          <button 
+          <small className="mb-1">Currency rates sourced from <a className="underline" href="https://api.exchangeratesapi.io/latest">api.exchangeratesapi.io</a> </small>
+          <button
             className="mt-4 block mx-auto bg-transparent hover:bg-primary text-primary font-semibold hover:text-white py-2 px-4 border border-primary hover:border-transparent rounded"
             onClick={e => alert('Coming soon!')}
-          >  
+          >
             Subscribe for Daily Updates
           </button>
         </div>

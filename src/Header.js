@@ -11,10 +11,10 @@ const Header = (props) => {
                     </a>
                 </div>
                 <div className="mt-6 md:mt-0">
-                    <nav className="text-sm text-sepia-900">
+                    {/* <nav className="text-sm text-sepia-900">
                         <a className="mr-6" href="#">Register</a>
                         <a className="mr-6" href="#">Sign in</a>
-                    </nav>
+                    </nav> */}
                 </div>
             </div>
         </header>
