@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 
 import './App.css';
 import Header from './Header'
 import Footer from './Footer'
 import CurrencyInput from './CurrencyInput'
+
+ReactGA.initialize('UA-172460508-1')
+ReactGA.pageview(window.location.pathname + window.location.search)
 
 const EXCHANGE_RATES_URL = 'https://api.exchangeratesapi.io/latest'
 
@@ -50,20 +54,53 @@ function App() {
     }
   }, [fromCurrency, toCurrency])
 
-  const handleFromAmountChange = (e) => {
+  const handleChangeFromAmount = (e) => {
     setCurrencyAmount(e.target.value)
     setIsLinearExchange(true)
+
+    ReactGA.event({
+      category: 'Amount',
+      action: `Change From Amount: ${e.target.value}`
+    })
   }
 
-  const handleToAmountChange = (e) => {
+  const handleChangeToAmount = (e) => {
     setCurrencyAmount(e.target.value)
     setIsLinearExchange(false)
+
+    ReactGA.event({
+      category: 'Amount',
+      action: `Change To Amount: ${e.target.value}`
+    })
+  }
+
+  const handleChangeFromCurrency = (e) => {
+    setFromCurrency(e.value)
+
+    ReactGA.event({
+      category: 'Currency',
+      action: `Change From Currency: ${e.value}`
+    })
+  }
+
+  const handleChangeToCurrency = (e) => {
+    setToCurrency(e.value)
+
+    ReactGA.event({
+      category: 'Currency',
+      action: `Change To Currency: ${e.value}`
+    })
   }
 
   const handleCurrencySwap = (e) => {
     let tempCurrency = fromCurrency
     setFromCurrency(toCurrency)
     setToCurrency(tempCurrency)
+
+    ReactGA.event({
+      category: 'Currency',
+      action: `Swap Currency ${tempCurrency} & ${toCurrency}`
+    });
   }
 
   return (
@@ -78,8 +115,8 @@ function App() {
             label="Amount"
             currencyOptions={currencyOptions}
             selectedCurrency={fromCurrency}
-            onChangeCurrency={e => setFromCurrency(e.value)}
-            onChangeCurrencyAmount={handleFromAmountChange}
+            onChangeCurrency={handleChangeFromCurrency}
+            onChangeCurrencyAmount={handleChangeFromAmount}
             currencyAmount={fromCurrencyAmount}
           />
           <div className="mt-3 mb-4 flex justify-end">
@@ -95,8 +132,8 @@ function App() {
             label="Converted to"
             currencyOptions={currencyOptions}
             selectedCurrency={toCurrency}
-            onChangeCurrency={e => setToCurrency(e.value)}
-            onChangeCurrencyAmount={handleToAmountChange}
+            onChangeCurrency={handleChangeToCurrency}
+            onChangeCurrencyAmount={handleChangeToAmount}
             currencyAmount={toCurrencyAmount}
           />
         </form>
