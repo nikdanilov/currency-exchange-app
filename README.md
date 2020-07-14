@@ -5,5 +5,5 @@
 - TailwindCSS on frontend
 - React & React Hooks for components state management
 <p align="center">
-![README GIF](https://github.com/devdanilov/react-tailwind-currency-exchange-app/blob/assets/exchange-currency-app.gif)
+  <img src="https://github.com/devdanilov/react-tailwind-currency-exchange-app/blob/assets/exchange-currency-app.gif" />
 </p>
