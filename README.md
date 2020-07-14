@@ -1,7 +1,6 @@
 # Currency exchange app 
 
-### Live DEMO:
-https://react-currency-exchange-app.netlify.app/
+<b>Live DEMO:</b> https://react-currency-exchange-app.netlify.app/
 
 - Live currency rates
 - Javascript for math calculations
