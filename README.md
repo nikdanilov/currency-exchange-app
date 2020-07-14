@@ -1,6 +1,6 @@
 # Currency exchange app 
 
-- Live currency rates data
+- Live currency rates
 - Javascript for math calculations
 - TailwindCSS on frontend
 - React & React Hooks for components state management
