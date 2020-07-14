@@ -1,6 +1,6 @@
 # Currency exchange app 
 
-## Live DEMO:
+### Live DEMO:
 https://react-currency-exchange-app.netlify.app/
 
 - Live currency rates
