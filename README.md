@@ -1,3 +1,8 @@
-# Currency exchange app created with TailwindCSS, React & React Hooks
+# Currency exchange app 
+
+- Live currency rates data
+- Javascript for math calculations
+- TailwindCSS on frontend
+- React & React Hooks for components state management
 
 ![README GIF](https://github.com/devdanilov/react-tailwind-currency-exchange-app/blob/assets/exchange-currency-app.gif)
